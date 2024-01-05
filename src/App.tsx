@@ -3,36 +3,36 @@ import Modal from 'react-modal';
 import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
 import { NewTransactionModal } from "./components/NewTransactionModal";
+import { TransactionsProvider } from './hooks/useTransactions';
 import { GlobalStyle } from "./styles/global";
-import { TransactionsContext } from './TransactionsContext';
 
 Modal.setAppElement('#root');
 
 export function App() {
-  
+
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
 
-  function handleOpenNewTransactionModal(){
-      setIsNewTransactionModalOpen(true);
+  function handleOpenNewTransactionModal() {
+    setIsNewTransactionModalOpen(true);
   }
 
-  function handleCloseNewTransactionModal(){
-      setIsNewTransactionModalOpen(false);
+  function handleCloseNewTransactionModal() {
+    setIsNewTransactionModalOpen(false);
   }
 
   return (
-    <TransactionsContext.Provider value={[]}>
-       <Header onOpenNewTransitionModal={handleOpenNewTransactionModal} />
+    <TransactionsProvider>
 
-       <Dashboard />
+      <Header onOpenNewTransitionModal={handleOpenNewTransactionModal} />
 
-       <NewTransactionModal 
+      <Dashboard />
+
+      <NewTransactionModal
         isOpen={isNewTransactionModalOpen}
-        onRequestClose = {handleCloseNewTransactionModal}
-       />
+        onRequestClose={handleCloseNewTransactionModal}
+      />
 
-       <GlobalStyle />
-    </TransactionsContext.Provider>
+      <GlobalStyle />
+    </TransactionsProvider>
   );
 }
-
